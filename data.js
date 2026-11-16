@@ -1,23 +1,28 @@
 window.SITE = {
 
-  /* ---- Artist ---- */
-  artist: { name: "Magdalena Gancarek", tagline: "Things that will last", tagline2: "made by hand", email: "email" },
+  artist: { name: "Magdalena Gancarek", tagline: "Things that will last", tagline2: "made by hand", email: "gancamade@gmail.com" },
 
   portfolio_sub: "Different ways of leaving trace",
   selected_works_sub: "A glimpse of recent pieces",
 
   footer: "© 2026 Magdalena Gancarek All Rights Reserved.",
 
-  /* ---- Social links in the header. icon: instagram | facebook | tiktok | pinterest ---- */
+  /* ---- Social links in the header---- */
+  /* { name: "Pinterest", url: "https://pinterest.com/", icon: "pinterest" }, */
   socials: [
-    { name: "Instagram", url: "https://instagram.com/", icon: "instagram" },
-    { name: "Facebook", url: "https://facebook.com/", icon: "facebook" },
-    { name: "TikTok", url: "https://tiktok.com/", icon: "tiktok" },
-    { name: "Pinterest", url: "https://pinterest.com/", icon: "pinterest" },
+    { name: "Instagram", url: "https://www.instagram.com/gancamade", icon: "instagram" },
+    { name: "Facebook", url: "https://www.facebook.com/profile.php?id=61584290132002", icon: "facebook" },
+    { name: "TikTok", url: "https://www.tiktok.com/@gancamade", icon: "tiktok" },
   ],
 
+  contact: {
+    title: "Get in touch",
+    lead: "Whether you have a question about a piece, an upcoming collection, custom work, or an exhibition opportunity, I’d love to hear from you.",
+    text: ""
+  },
+
   /* ---- Artist statement ---- */
-  statement: "In my work I'm trying catch the moments that would otherwise be {dust:lost}, before we realised it. \nMy work is an attempt to give these intangible things a form that can {slam:last}. \nI adore the {beauty:beauty} of things in the process of {melt:disappearing}: fading light, withering flower, seting sun. \nThe awareness that they will be gone forever makes me appreciate them more. \nI am drawn the possibility that an artwork can outlast the moment that inspired it. \n\nBy my work I want to make people stop for a moment in this {fast:fast-paced-world} to be captivated by its {breathe:n} everlasting beauty.",
+  statement: "In my work I'm trying catch the moments that would otherwise be {dust:lost}, before we realised it. \nMy work is an attempt to give these intangible things a form that can {slam:last}. \nI adore the {beauty:beauty} of things in the process of {melt:disappearing}: fading light, withering flower, seting sun. \nThe awareness that they will be gone forever makes me appreciate them more. \nI am drawn the possibility that an artwork can outlast the moment that inspired it. \n\nBy my work I want to make people stop for a moment in this {fast:fast-paced-world} to be captivated by its {breathe:n}everlasting beauty.",
 
   /* ---- Branches of art. A new branch gets its own page and a tile on the main page. ---- */
   categories: [
@@ -27,7 +32,7 @@ window.SITE = {
   { id: "lamps",  name: "Lamps",  medium: "Clay, plywood", blurb: "Form to hold the light in the darkness" }
 ],
 
-  /* ---- Collections (shown as titled groups on a branch page). Link a piece with `collection: "id"`. ---- */
+  /* ---- Collections. Link a piece with `collection: "id"`. ---- */
   collections: [
   { id:"e-m-e", cat:"ceramic", title:"Ephemeral made Ethernal", year:2026, blurb:"I never liked flowers, because they were gone before I even realized that. Now I found a way to make them last forever. However, I captured them in that final moment before they vanish in decay. That's my way to stop the process of faiding. Those flowers will newer die. They will carry this captured moment to the future, for those who will come after us." },
   { id:"comisions", cat:"ceramic", title:"Comisions", year:2026, blurb:"Something out of my usual work, that makes people happy." },
@@ -63,11 +68,14 @@ window.SITE = {
     status: "available",               // "available" | "unavailable" | "wip"
     featured: false,                    // shown on the main page
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/failing_tulips.jpg",
+    description: "Ceramic vase with withered tulips",
+    thumb: "images-thumbs/failing_tulips.jpg",
     images: [
       { src: "images/failing_tulips.jpg", alt: "Front view", caption: "Front" },
-      { src: "images/failing_tulips.jpg", alt: "Glaze detail", caption: "Detail" },
+      { src: "images/failing_tulips_1.jpg", alt: "Glaze detail", caption: "Detail" },
+      { src: "images/failing_tulips_2.jpg", alt: "Glaze detail", caption: "Detail" },
+      { src: "images/failing_tulips_3.jpg", alt: "Glaze detail", caption: "Detail" },
+      { src: "images/failing_tulips_4.jpg", alt: "Glaze detail", caption: "Detail" },
     ],
   },
   {
@@ -81,8 +89,8 @@ window.SITE = {
     status: "available", 
     featured: true,
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/first_misfire.jpg",
+    description: "Ceramic sculpture of withered tulips",
+    thumb: "images-thumbs/first_misfire.jpg",
     images: [
       { src: "images/first_misfire.jpg", alt: "Front view", caption: "Front" }
     ],
@@ -95,13 +103,13 @@ window.SITE = {
     collection: "e-m-e",    
     medium: "Stoneware, glaze",
     size: "25 × 20 cm",
-    status: "wip",             
+    status: "available",             
     featured: true,                 
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/not_enough_water_for_the_roses.jpg",
+    description: "Ceramic vase with withered roses",
+    thumb: "images-thumbs/not_enough_water_for_the_roses.jpg",
     images: [
-      { src: "images/not_enough_water_for_the_roses.jpg", alt: "Front view", caption: "Front" }
+      { src: "images/not_enough_water_for_the_roses.jpg", alt: "Front view", caption: "Front" },
     ],
   },
   {
@@ -111,14 +119,17 @@ window.SITE = {
     category: "ceramic",
     collection: "e-m-e",      
     medium: "Stoneware, glaze",
-    size: "tbd",
-    status: "wip",              
+    size: "available",
+    status: "available",              
     featured: true,                    
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/thrown_bouquet_of_thorns.jpg",
+    description: "Ceramic vase out of bouquet of roses",
+    thumb: "images-thumbs/thrown_bouquet_of_thorns.jpg",
     images: [
-      { src: "images/thrown_bouquet_of_thorns.jpg", alt: "Front view", caption: "Front" }
+      { src: "images/thrown_bouquet_of_thorns.jpg", alt: "Front view", caption: "Front" },
+      { src: "images/thrown_bouquet_of_thorns_1.jpg", alt: "Front view", caption: "Front" },
+      { src: "images/thrown_bouquet_of_thorns_2.jpg", alt: "Front view", caption: "Front" },
+
     ],
   },
   {
@@ -126,14 +137,14 @@ window.SITE = {
     title: "Pearls lamp",
     year: 2026,
     category: "lamps",
-    medium: "Stoneware, glaze",
+    medium: "Brass lamp with pearls",
     collection: "v-o-l",
     size: "25 × 20 cm",
     status: "unavailable",              
     featured: true,                   
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/pearls_lamp_light.jpg",
+    description: "",
+    thumb: "images-thumbs/pearls_lamp_light.jpg",
     images: [
       { src: "images/pearls_lamp_light.jpg", alt: "Light", caption: "Light" },
       { src: "images/pearls_lamp_daylight.jpg", alt: "Daylight", caption: "Daylight" },
@@ -152,8 +163,8 @@ window.SITE = {
     status: "available",              
     featured: true,                    
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/the_fall_of_a_gladiols_sword.jpg",
+    description: "Wind chimes out of gladiols",
+    thumb: "images-thumbs/the_fall_of_a_gladiols_sword.jpg",
     images: [
       { src: "images/the_fall_of_a_gladiols_sword.jpg", alt: "Front view", caption: "Front" }
     ],
@@ -166,10 +177,10 @@ window.SITE = {
     medium: "Acrylic on canvas",
     size: "50 x 50 cm",
     status: "available",              
-    featured: true,                   
+    featured: false,                   
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/celestial_wings.jpg",
+    description: "",
+    thumb: "images-thumbs/celestial_wings.jpg",
     images: [
       { src: "images/celestial_wings.jpg", alt: "Front", caption: "Front" },
       { src: "images/celestial_wings_side.jpg", alt: "Side", caption: "Side" },
@@ -186,8 +197,8 @@ window.SITE = {
     status: "available",              
     featured: true,                    
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/two_sides.jpg",
+    description: "",
+    thumb: "images-thumbs/two_sides.jpg",
     images: [
       { src: "images/two_sides.jpg", alt: "Front", caption: "Front" },
       { src: "images/two_sides_side.jpg", alt: "Side", caption: "Side" },
@@ -204,8 +215,8 @@ window.SITE = {
     status: "",               
     featured: true,                   
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/magic_girl.jpg",
+    description: "",
+    thumb: "images-thumbs/magic_girl.jpg",
     images: [
       { src: "images/magic_girl.jpg", alt: "Front", caption: "Front" },
       { src: "images/magic_girl_long.jpg", alt: "Long", caption: "Long" },
@@ -219,10 +230,10 @@ window.SITE = {
     medium: "3D",
     size: "",
     status: "",               
-    featured: true,                    
+    featured: false,                    
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/in_magic_forest.jpg",
+    description: "",
+    thumb: "images-thumbs/in_magic_forest.jpg",
     images: [
       { src: "images/in_magic_forest.jpg", alt: "Front", caption: "Front" },
     ],
@@ -237,8 +248,8 @@ window.SITE = {
     status: "",               
     featured: true,                   
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/space.png",
+    description: "",
+    thumb: "images-thumbs/space.jpg",
     images: [
       { src: "images/space.png", alt: "Front", caption: "Front" },
     ],
@@ -251,18 +262,20 @@ window.SITE = {
     collection: "e-m-e",       
     medium: "Stoneware, glaze",
     size: "tbd",
-    status: "wip",               
+    status: "available",               
     featured: false,                   
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/tulibelle.jpg",
+    description: "Wind chimes out of tulips",
+    thumb: "images-thumbs/tulibelle.jpg",
     images: [
       { src: "images/tulibelle.jpg", alt: "Front", caption: "Front" },
+      { src: "images/tulibelle_1.jpg", alt: "Front", caption: "Front" },
+
     ],
   },
   {
-    id: "where_the_tulips_ring",
-    title: "Where Tulips Ring",
+    id: "uprooted",
+    title: "Uprooted",
     year: 2026,
     category: "ceramic",
     collection: "e-m-e",     
@@ -271,10 +284,10 @@ window.SITE = {
     status: "wip",             
     featured: false,               
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/where_tulips_ring.jpg",
+    description: "Ceramic vase/sculpture",
+    thumb: "images-thumbs/uprooted.jpg",
     images: [
-      { src: "images/where_tulips_ring.jpg", alt: "Front", caption: "Front" },
+      { src: "images/uprooted.jpg", alt: "Front", caption: "Front" },
     ],
   },
   {
@@ -288,11 +301,11 @@ window.SITE = {
     status: "available",             
     featured: true,                    
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/bellalilium.jpg",
+    description: "Wind chimes out of lilies",
+    thumb: "images-thumbs/bellalilium.jpg",
     images: [
       { src: "images/bellalilium.jpg", alt: "Front", caption: "Front" },
-      { src: "images/bellalilium-bell.jpg", alt: "Front", caption: "Front" }
+      { src: "images/bellalilium_1.jpg", alt: "Front", caption: "Front" }
     ],
   },
  {
@@ -304,10 +317,10 @@ window.SITE = {
     medium: "clay, plywood",
     size: "35 x 35 cm",
     status: "available",              
-    featured: true,                  
+    featured: false,                  
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/lamp-1.jpg",
+    description: "",
+    thumb: "images-thumbs/lamp-1.jpg",
     images: [
       { src: "images/lamp-1.jpg", alt: "Front", caption: "Front" },
     ],
@@ -323,10 +336,11 @@ window.SITE = {
     status: "available",              
     featured: true,                   
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/lamp-2.jpg",
+    description: "",
+    thumb: "images-thumbs/lamp-2.jpg",
     images: [
       { src: "images/lamp-2.jpg", alt: "Front", caption: "Front" },
+      { src: "images/lamp-2_1.jpg", alt: "Front", caption: "Front" }
     ],
   },
   {
@@ -340,10 +354,12 @@ window.SITE = {
     status: "available",              
     featured: true,                
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/lamp-3.jpg",
+    description: "",
+    thumb: "images-thumbs/lamp-3.jpg",
     images: [
       { src: "images/lamp-3.jpg", alt: "Front", caption: "Front" },
+      { src: "images/lamp-3_1.jpg", alt: "Front", caption: "Front" },
+      { src: "images/lamp-3_2.jpg", alt: "Front", caption: "Front" },
     ],
   },
   {
@@ -357,28 +373,47 @@ window.SITE = {
     status: "available",               
     featured: false,                  
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/lamp-4.jpg",
+    description: "",
+    thumb: "images-thumbs/lamp-4.jpg",
     images: [
       { src: "images/lamp-4.jpg", alt: "Front", caption: "Front" },
+      { src: "images/lamp-4_1.jpg", alt: "Front", caption: "Front" },
     ],
   },
     {
-    id: "bez",
-    title: "bez",
+    id: "lamp-5",
+    title: "Lamp",
+    year: 2025,
+    category: "lamps",
+    collection: "v-o-l",
+    medium: "clay, plywood",
+    size: "35 x 35 cm",
+    status: "available",               
+    featured: false,                  
+    ratio: 1,
+    description: "",
+    thumb: "images-thumbs/lamp-5.jpg",
+    images: [
+      { src: "images/lamp-5.jpg", alt: "Front", caption: "Front" },
+      { src: "images/lamp-5_1.jpg", alt: "Front", caption: "Front" },
+    ],
+  },
+    {
+    id: "lilac",
+    title: "Lilac",
     year: 2026,
     category: "ceramic",
     collection: "e-m-e",    
     medium: "Stoneware, glaze",
     size: "tbd",
-    status: "wip",              
+    status: "available",              
     featured: false,                 
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/bellalilium.jpg",
+    description: "Ceramic sculpture",
+    thumb: "images-thumbs/lilac.jpg",
     images: [
-      { src: "images/bellalilium.jpg", alt: "Front", caption: "Front" },
-      { src: "images/bellalilium-bell.jpg", alt: "Front", caption: "Front" }
+      { src: "images/lilac.jpg", alt: "Front", caption: "Front" },
+      { src: "images/lilac.jpg", alt: "Front", caption: "Front" }
     ],
   },
     {
@@ -389,11 +424,11 @@ window.SITE = {
     collection: "e-m-e",    
     medium: "Stoneware, glaze",
     size: "tbd",
-    status: "wip",         
-    featured: false,    
+    status: "available",         
+    featured: true,    
     ratio: 1,
-    description: "Short text about the piece.",
-    thumb: "images/rose_chimes.jpg",
+    description: "Rose wind chimes",
+    thumb: "images-thumbs/rose_chimes.jpg",
     images: [
       { src: "images/rose_chimes.jpg", alt: "Front", caption: "Front" },
     ],

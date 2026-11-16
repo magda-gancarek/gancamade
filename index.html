@@ -204,6 +204,11 @@ h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,5vw,3.6rem);mar
 .piece{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);max-width:1200px;margin:0 auto;align-items:start}
 @media(max-width:800px){.piece{grid-template-columns:1fr}
 }
+section.page.contact{padding-top:clamp(84px,9vw,110px);min-height:0}
+.contact .sub{margin-bottom:24px}
+.contact .faq{margin-top:44px}
+.contact .cgrid form{gap:18px}
+.contact .cgrid textarea{min-height:84px}
 .piece .main .art{filter:none;max-height:80vh}
 .piece .main .aw{margin:0 auto}
 .thumbs{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
@@ -235,6 +240,23 @@ textarea{min-height:130px;resize:vertical}
 form .btn{justify-self:center;margin-top:12px}
 .mail{position:relative;margin-top:50px;color:var(--mute);font-size:.85rem}
 .faq{margin-top:90px}
+.cgrid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,7vw,110px);max-width:1100px;margin:0 auto;text-align:left;align-items:start}
+.cgrid form{max-width:none;margin:0;gap:26px}
+.cgrid label{display:grid;gap:4px;font-size:.72rem;font-weight:400;letter-spacing:.08em;color:var(--paper)}
+.cgrid input,.cgrid textarea{border-bottom-width:2px;border-color:rgba(244,242,238,.55);font-size:.85rem;padding:10px 2px}
+.cgrid textarea{min-height:120px}
+.cgrid input::placeholder,.cgrid textarea::placeholder{color:var(--mute)}
+.cgrid form .btn{justify-self:stretch;width:100%;margin-top:8px;border-radius:99px;background:var(--paper);color:#3b2a8f;border-color:var(--paper);font-weight:400}
+.cgrid form .btn:hover{background:#fff;color:#3b2a8f;box-shadow:0 0 50px rgba(200,170,255,.55)}
+.cinfo h2{font-size:clamp(2.2rem,4.5vw,3.4rem);margin:0 0 22px}
+.cinfo .lead{font-style:italic;font-weight:400;line-height:1.7;margin:0 0 18px;color:var(--paper)}
+.cinfo .txt{line-height:1.8;color:#bdb9c8;font-size:.9rem;margin:0 0 30px}
+.csocial{display:flex;gap:26px;flex-wrap:wrap;margin:0}
+.csocial a{display:grid;place-items:center;width:34px;height:34px;color:var(--paper);transition:transform .4s,color .4s,filter .4s}
+.csocial a:hover{transform:translateY(-3px);color:#c9a8ff;filter:drop-shadow(0 0 10px rgba(160,120,255,.7))}
+.csocial svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.cinfo .mail{margin-top:26px}
+@media(max-width:800px){.cgrid{grid-template-columns:1fr}.cinfo{order:-1}}
 .faq h3{font-family:var(--serif);font-weight:300;font-size:1.8rem;text-align:center;margin:0 0 24px;letter-spacing:.08em}
 details{border-bottom:1px solid rgba(244,242,238,.15);padding:16px 0}
 summary{cursor:pointer;list-style:none;font-size:.95rem;display:flex;justify-content:space-between;gap:12px}
@@ -339,7 +361,7 @@ a,button,.card,.cat,.swc,.hsw,summary,.thumbs>div{touch-action:manipulation;-web
 const { useState, useEffect, useRef } = React;
 
 /* The content (pieces, texts, links) is NOT in this code: it lives in the DATA block (data.js) as window.SITE. */
-const { artist:ARTIST, socials:SOCIALS, statement:STATEMENT, categories:CATEGORIES, collections:COLLECTIONS, faq:FAQ, portfolio_sub:PORTFOLIO_SUB="Different ways of making light", selected_works_sub:SELECTED_SUB="A glimpse of recent pieces" } = window.SITE;
+const { artist:ARTIST, socials:SOCIALS, statement:STATEMENT, categories:CATEGORIES, collections:COLLECTIONS, faq:FAQ, portfolio_sub:PORTFOLIO_SUB="Different ways of making light", selected_works_sub:SELECTED_SUB="A glimpse of recent pieces", footer:FOOTER, contact:CT={} } = window.SITE;
 const ICONS = {
   instagram: "M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm5 5a4 4 0 100 8 4 4 0 000-8zm5.5-1.5h.01",
   facebook: "M14 8h3V4h-3a4 4 0 00-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z",
@@ -416,7 +438,7 @@ function Statement(){
   const toks = STATEMENT.split("\n").flatMap((ln,li)=>[...(li?["\n"]:[]),...ln.split(" ").filter(Boolean)]).map(t=>{
     if(t==="\n") return { br:true };
     let m = t.match(/^\*(.+?)\*([^\w*]*)$/); if(m) return { w:m[1], p:m[2], k:"melt" };
-    m = t.match(/^\{(\w+):(.+?)\}([^\w}]*)$/); if(m) return { w:m[2], p:m[3], k:m[1] };
+    m = t.match(/^(.*?)\{(\w+):(.+?)\}(.*)$/); if(m) return { pre:m[1], w:m[3], p:m[4], k:m[2] };
     m = t.match(/^(.*?)([.,;:!?]*)$/); return { w:m[1], p:m[2], k:"" };
   });
   useEffect(()=>{
@@ -425,7 +447,7 @@ function Statement(){
     f(); addEventListener("scroll",f,{passive:true}); return ()=>removeEventListener("scroll",f);
   },[]);
   let mi = 0;
-  return <p className="stmt" ref={ref}>{toks.map((x,i)=>x.br ? <br key={i}/> : <span key={i}>{x.k ? <Word k={x.k} i={mi++}>{x.w}</Word> : x.w}{x.p} </span>)}</p>;
+  return <p className="stmt" ref={ref}>{toks.map((x,i)=>x.br ? <br key={i}/> : <span key={i} style={(x.pre||/\w/.test(x.p||""))?{whiteSpace:"nowrap"}:undefined}>{x.pre}{x.k ? <Word k={x.k} i={mi++}>{x.w}</Word> : x.w}{x.p} </span>)}</p>;
 }
 function Chips({ cur, go }){
   return <div className="chips">
@@ -510,14 +532,26 @@ function Contact({ draft, setDraft, page }){
   const submit = e => { e.preventDefault(); const f=new FormData(e.target);
     location.href=`mailto:${ARTIST.email}?subject=${encodeURIComponent("Message from "+f.get("name"))}&body=${encodeURIComponent(draft+"\n\n"+f.get("name")+" · "+f.get("email"))}`; setSent(true); };
   return (
-    <section id="contact" className={"center"+(page?" page":"")}>
+    <section id="contact" className={"center contact"+(page?" page":"")}>
       <div ref={r} className="rv" style={{position:"relative"}}><h2>Contact</h2><div className="sub">Commissions · Exhibitions · Hello</div></div>
-      <form id="form" onSubmit={submit}>
-        <input name="name" placeholder="Name" required/>
-        <input name="email" type="email" placeholder="Email" required/>
-        <textarea value={draft} onChange={e=>setDraft(e.target.value)} placeholder="Message" required/>
-        <button className="btn">{sent?"Opening mail…":"Send"}</button>
-      </form>
+<div className="cgrid">
+        <form id="form" onSubmit={submit}>
+          <label>Email<input name="email" type="email" placeholder="Enter a valid email address" required/></label>
+          <label>Name<input name="name" placeholder="Enter your name" required/></label>
+          <label>Message<textarea value={draft} onChange={e=>setDraft(e.target.value)} placeholder="Enter your message" required/></label>
+          <button className="btn">{sent?"Opening mail…":"Submit"}</button>
+        </form>
+        <div className="cinfo">
+          <h2>{CT.title||"Get in touch"}</h2>
+          <p className="lead">{CT.lead||""}</p>
+          {CT.text && <p className="txt">{CT.text}</p>}
+          <div className="csocial">{SOCIALS.map(s=>
+            <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer" aria-label={s.name} title={s.name}>
+              <svg viewBox="0 0 24 24"><path d={ICONS[s.icon]}/></svg></a>)}
+          </div>
+          <div className="mail">{ARTIST.email}</div>
+        </div>
+      </div>
       <div className="faq">
         <h3>Questions</h3>
         {FAQ.map((f,k)=>(
@@ -528,7 +562,6 @@ function Contact({ draft, setDraft, page }){
             </div>
           </details>))}
       </div>
-      <div className="mail">{ARTIST.email}</div>
     </section>
   );
 }
@@ -557,9 +590,8 @@ function Home({ go }){
       <a className="more" onClick={()=>go("all")}>View all works →</a>
     </section>
     <section id="statement">
-      <Head title="Artist Statement" sub="On fading"/>
+      <Head title="Artist Statement"/>
       <Statement/>
-      <div className="sig">— {ARTIST.name}</div>
     </section>
   </>);
 }
@@ -609,7 +641,7 @@ function App(){
      isGal ? <Gallery route={route} go={go}/> :
      isHome ? <Home go={go}/> : null}
     {(isHome||isContact) && <Contact draft={draft} setDraft={setDraft} page={isContact}/>}
-    <footer>© 2024 {ARTIST.name.toUpperCase()}</footer>
+    <footer>{FOOTER || ("© "+new Date().getFullYear()+" "+ARTIST.name.toUpperCase())}</footer>
   </>);
 }
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
