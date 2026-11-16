@@ -54,7 +54,8 @@ section.page{padding-top:clamp(100px,14vw,150px);min-height:100vh}
 h2{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,5vw,3.6rem);margin:0 0 12px;letter-spacing:.05em}
 .sub{color:var(--mute);font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:56px}
 .center{text-align:center}
-.grid{columns:3 260px;column-gap:clamp(14px,2vw,28px);max-width:1300px;margin:0 auto}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,28px);align-items:start;max-width:1300px;margin:0 auto}
+.grid>.card{margin-bottom:0}
 .card{break-inside:avoid;margin-bottom:clamp(14px,2vw,28px);cursor:pointer;position:relative;overflow:hidden}
 .art{width:100%;position:relative;filter:grayscale(1) contrast(1.1) brightness(.75);transition:filter 1.4s ease,transform 1.6s ease}
 .card:hover .art,.card.in.lit .art,.lit-on .art{filter:none}
@@ -299,7 +300,7 @@ a,button,.card,.cat,.swc,.hsw,summary,.thumbs>div{touch-action:manipulation;-web
 }
 @media(max-width:640px){
   section{padding-left:16px;padding-right:16px}
-  .grid{columns:2;column-gap:10px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .card{margin-bottom:10px}
   .cap{padding:26px 10px 9px}.cap b{font-size:.95rem}.cap i{font-size:.58rem;letter-spacing:.1em}
   .cats{grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:60px}
