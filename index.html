@@ -15,6 +15,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opa
 a{color:inherit;text-decoration:none;cursor:pointer}
 header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:18px clamp(16px,4vw,48px);background:linear-gradient(rgba(7,7,10,.85),rgba(7,7,10,0));color:#fff}
 .logo{font-family:var(--serif);font-size:1.3rem;letter-spacing:.12em}
+.logo img{height:30px;width:auto;display:block}
 nav{display:flex;gap:clamp(12px,3vw,32px);align-items:center;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
 nav a{opacity:.7;transition:opacity .4s}nav a:hover{opacity:1}
 .social{display:flex;gap:14px;margin-left:8px}
@@ -27,7 +28,7 @@ nav a{opacity:.7;transition:opacity .4s}nav a:hover{opacity:1}
 .dd.shut>.menu{opacity:0!important;visibility:hidden!important}
 .menu a{display:block;padding:11px 20px;opacity:.75;white-space:nowrap}
 .menu a:hover{opacity:1;background:rgba(255,255,255,.06)}
-@media(max-width:640px){nav{gap:10px;letter-spacing:.1em;font-size:.62rem}.social{gap:9px;margin-left:0}.social svg{width:16px;height:16px}.logo{font-size:.85rem;letter-spacing:.04em}.hm{display:none}
+@media(max-width:640px){nav{gap:10px;letter-spacing:.1em;font-size:.62rem}.social{gap:9px;margin-left:0}.social svg{width:16px;height:16px}.logo{font-size:.85rem;letter-spacing:.04em}.logo img{height:20px}.hm{display:none}
 }
 #glow{position:fixed;width:300px;height:300px;border-radius:50%;pointer-events:none;z-index:1;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(185,160,255,.5),rgba(150,120,255,.2) 38%,transparent 68%);transition:left .6s ease-out,top .6s ease-out;left:50%;top:50%;mix-blend-mode:screen}
 .hero{min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden;padding:0 20px}
@@ -623,7 +624,7 @@ function App(){
   return (<>
     <svg width="0" height="0" style={{position:"absolute"}} ganca-hidden="true"><filter id="wob" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence baseFrequency=".03" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter><filter id="boil" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence baseFrequency=".03" numOctaves="2" seed="1"><animate attributeName="seed" values="1;5;9;14;3" dur="1s" calcMode="discrete" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="5"/></filter><filter id="ink0" x="-15%" y="-40%" width="130%" height="180%" colorInterpolationFilters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"><animate attributeName="stdDeviation" values="5;.01;.01;5" keyTimes="0;.35;.75;1" dur="9s" begin="0s" repeatCount="indefinite"/></feGaussianBlur><feColorMatrix in="b" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 26 -10" result="t"/><feGaussianBlur in="SourceGraphic" stdDeviation="1.1" result="g"/><feColorMatrix in="g" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .3 0" result="gh"/><feMerge><feMergeNode in="gh"/><feMergeNode in="t"/></feMerge></filter><filter id="ink1" x="-15%" y="-40%" width="130%" height="180%" colorInterpolationFilters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"><animate attributeName="stdDeviation" values="5;.01;.01;5" keyTimes="0;.35;.75;1" dur="9s" begin="-3s" repeatCount="indefinite"/></feGaussianBlur><feColorMatrix in="b" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 26 -10" result="t"/><feGaussianBlur in="SourceGraphic" stdDeviation="1.1" result="g"/><feColorMatrix in="g" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .3 0" result="gh"/><feMerge><feMergeNode in="gh"/><feMergeNode in="t"/></feMerge></filter><filter id="ink2" x="-15%" y="-40%" width="130%" height="180%" colorInterpolationFilters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"><animate attributeName="stdDeviation" values="5;.01;.01;5" keyTimes="0;.35;.75;1" dur="9s" begin="-6s" repeatCount="indefinite"/></feGaussianBlur><feColorMatrix in="b" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 26 -10" result="t"/><feGaussianBlur in="SourceGraphic" stdDeviation="1.1" result="g"/><feColorMatrix in="g" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 .3 0" result="gh"/><feMerge><feMergeNode in="gh"/><feMergeNode in="t"/></feMerge></filter></svg>
     <header className={menu?"open":""}>
-      <a className="logo" onClick={()=>{ if(route==="home") scrollTo({top:0,behavior:"smooth"}); else go("home"); }}>{ARTIST.name.toUpperCase()}</a>
+      <a className="logo" onClick={()=>{ if(route==="home") scrollTo({top:0,behavior:"smooth"}); else go("home"); }}>{ARTIST.logo ? <img src={ARTIST.logo} alt={ARTIST.name} /> : ARTIST.name.toUpperCase()}</a>
       <button type="button" className="burger" ganca-label={menu?"Close menu":"Open menu"} ganca-expanded={menu} onClick={()=>setMenu(m=>!m)}><i/><i/><i/></button>
       <nav onClick={e=>{ if(e.target.closest("a")) setMenu(false); }}>
         <div className={"dd"+(shut?" shut":"")} onMouseLeave={()=>setShut(false)}>

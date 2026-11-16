@@ -1,6 +1,6 @@
 window.SITE = {
 
-  artist: { name: "Magdalena Gancarek", tagline: "Things that will last", tagline2: "made by hand", email: "gancamade@gmail.com" },
+  artist: { name: "Magdalena Gancarek", tagline: "Things that will last", tagline2: "made by hand", logo: "images/logo.png", email: "gancamade@gmail.com" },
 
   portfolio_sub: "Different ways of leaving trace",
   selected_works_sub: "A glimpse of recent pieces",
