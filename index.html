@@ -43,6 +43,8 @@ nav a{opacity:.7;transition:opacity .4s}nav a:hover{opacity:1}
 
 @keyframes emerge{to{opacity:1;filter:blur(0)}}
 .hero p{position:relative;font-size:.78rem;letter-spacing:.35em;text-transform:uppercase;color:var(--mute);margin-top:28px;opacity:0;animation:emerge 2s 1.8s forwards}
+.tl2img{display:block;margin:16px auto 0;height:clamp(46px,7vw,50px);width:auto;max-width:90vw}
+.tl2img.inv{filter:brightness(0) invert(1)}
 .hero p .tl2{display:inline-block;margin-top:14px;font-family:var(--serif);font-style:italic;text-transform:none;font-size:1.15rem;letter-spacing:.08em;color:#cfc9d6}
 .scroll{position:absolute;bottom:clamp(24px,5vh,48px);left:50%;margin-left:-26px;width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(244,242,238,.75);display:grid;place-items:center;cursor:pointer;color:#fff;background:rgba(7,7,10,.3);backdrop-filter:blur(4px);box-shadow:0 0 28px rgba(255,190,110,.5);animation:bob 2.4s ease-in-out infinite;z-index:2}
 .scroll svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -492,7 +494,22 @@ function Gallery({ route, go }){
   );
 }
 
-function Piece({ id, go, ask }){
+/* Order of works exactly as the category page shows them (collections first, then the rest) */
+const catList = id => {
+  const list = ARTWORKS.filter(a=>a.cat===id);
+  const cs = COLLECTIONS.filter(c=>c.cat===id);
+  if(!cs.length) return list;
+  return [...cs.flatMap(c=>list.filter(a=>a.coll===c.id)), ...list.filter(a=>!cs.some(c=>c.id===a.coll))];
+};
+/* The list that next / previous walks through: the list you came from, otherwise the piece's own category */
+const orderFor = (ctx,w) => {
+  if(ctx==="all") return ARTWORKS;
+  if(ctx==="home"){ const f=ARTWORKS.filter(a=>a.featured); if(f.some(a=>a.id===w.id)) return f; }
+  if(catOf(ctx) && ctx===w.cat) return catList(ctx);
+  return catList(w.cat);
+};
+
+function Piece({ id, go, ask, ctx }){
   const i = ARTWORKS.findIndex(a=>a.id===id);
   const w = ARTWORKS[i];
   const [sel,setSel] = useState(0);
@@ -500,8 +517,8 @@ function Piece({ id, go, ask }){
   if(!w) return <section className="page center"><h2>Not found</h2><a className="more" onClick={()=>go("all")}>All works</a></section>;
   const imgs = w.images.map((m,v)=>({...m,v}));
   const cur = imgs[sel] || imgs[0], c = catOf(w.cat);
-  const prev = ARTWORKS[(i-1+ARTWORKS.length)%ARTWORKS.length], next = ARTWORKS[(i+1)%ARTWORKS.length];
-  return (
+  const list = orderFor(ctx,w), k = list.findIndex(a=>a.id===w.id);
+  const prev = list[(k-1+list.length)%list.length], next = list[(k+1)%list.length];  return (
     <section className="page">
       <a className="back" onClick={()=>go(w.cat)}>← {c.name}</a>
       <div className="piece">
@@ -575,7 +592,9 @@ function Home({ go }){
       <div className="mist m1"/><div className="mist m2"/><div className="mist m3"/>
       <div>
         <h1>{ARTIST.name.split(" ").map((word,wi,ws)=>{ const off = ws.slice(0,wi).join(" ").length + (wi?1:0); return <span key={wi} className="nm">{word.split("").map((c,j)=><span key={j} className="lt" style={{animationDelay:`${(off+j)*0.28}s`}}>{c}</span>)}{wi<ws.length-1?" ":""}</span>; })}</h1>
-        <p>{ARTIST.tagline}{ARTIST.tagline2 && <><br/><span className="tl2">{ARTIST.tagline2}</span></>}</p>
+        <p>&nbsp;</p>
+        <p>{ARTIST.tagline}</p>
+        <p>{ARTIST.tagline2 && <><br/>{(/\.(png|jpe?g|webp|svg|gif)(\?.*)?$/i.test(ARTIST.tagline2) || /^data:image/.test(ARTIST.tagline2)) ? <img className={"tl2img"+(ARTIST.tagline2_invert?" inv":"")} src={ARTIST.tagline2} alt={ARTIST.tagline2_alt||""}/> : <span className="tl2">{ARTIST.tagline2}</span>}</>}</p>
       </div>
       <a className="scroll" ganca-label="Scroll down" onClick={()=>{ const el=document.getElementById("portfolio"); el&&el.scrollIntoView({behavior:"smooth"}); }}><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></a>
     </div>
@@ -603,9 +622,10 @@ function App(){
   const [draft,setDraft] = useState("");
   const [shut,setShut] = useState(false);
   const [menu,setMenu] = useState(false);
+  const [ctx,setCtx] = useState(null);
   useEffect(()=>{ setMenu(false); },[route]);
   useEffect(()=>{ document.body.classList.toggle("menu-open",menu); return ()=>document.body.classList.remove("menu-open"); },[menu]);
-  const go = t => { if(t!==route) scrollTo({top:0,left:0,behavior:"instant"}); try{ location.hash = t==="home"?"":t; }catch(e){} setRoute(t); };
+  const go = t => { if(t.startsWith("piece-") && !route.startsWith("piece-")) setCtx(route); if(t!==route) scrollTo(0,0); try{ location.hash = t==="home"?"":t; }catch(e){} setRoute(t); };
   useEffect(()=>{ const h=location.hash.slice(1); if(h==="portfolio"||h==="statement"){ setTimeout(()=>{ const el=document.getElementById(h); el&&el.scrollIntoView(); },120); } },[]);
   useEffect(()=>{ const f=()=>setRoute(parse()); addEventListener("hashchange",f); return ()=>removeEventListener("hashchange",f); },[]);
   useEffect(()=>{
@@ -639,7 +659,7 @@ function App(){
         </div>
       </nav>
     </header>
-    {m ? <Piece id={m[1]} go={go} ask={ask}/> :
+    {m ? <Piece id={m[1]} go={go} ask={ask} ctx={ctx}/>:
      isGal ? <Gallery route={route} go={go}/> :
      isHome ? <Home go={go}/> : null}
     {(isHome||isContact) && <Contact draft={draft} setDraft={setDraft} page={isContact}/>}
