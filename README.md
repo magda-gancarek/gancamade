@@ -1,1 +1,1 @@
-Portfolio link: https://magda-gancarek.github.io/art-portfolio/
+Portfolio link: https://magda-gancarek.github.io/gancamade/
